@@ -27,7 +27,6 @@ development:
   version_label: default
 
 
-
 navbar:
   title: mhpfilter
   type: default
@@ -41,34 +40,33 @@ navbar:
     - icon: fa-code
       text: Reference
       href: reference/index.html
-    - icon: fa-book
-      text: Articles
+    - text: Articles
+      icon: fa-book
       menu:
-      - text: "Introduction to mhpfilter"
-        href: articles/introduction.html
-      - text: "Mathematical Methodology"
-        href: articles/methodology.html
+        - text: "Introduction to mhpfilter"
+          href: articles/introduction.html
+        - text: "Mathematical Methodology"
+          href: articles/methodology.html
     - icon: fa-newspaper-o
       text: News
       href: news/index.html
   right:
-    - text: "GitHub"
-      href: https://github.com/myaseen208/mhpfilter
+    - text: GitHub
       icon: fa-github
-      aria-label: "GitHub repository"
-    - text: "CRAN"
-      href: https://cran.r-project.org/package=mhpfilter
+      href: https://github.com/myaseen208/mhpfilter
+      aria-label: GitHub repository
+    - text: CRAN
       icon: fa-download
-      aria-label: "CRAN"
-    - text: "ResearchGate"
-      href: https://www.researchgate.net/profile/Muhammad_Yaseen10
+      href: https://cran.r-project.org/package=mhpfilter
+      aria-label: CRAN
+    - text: ResearchGate
       icon: fa-graduation-cap
-      aria-label: "ResearchGate"
-    - text: "Twitter"
+      href: https://www.researchgate.net/profile/Muhammad_Yaseen10
+      aria-label: ResearchGate
+    - text: Twitter
+      icon: fab fa-twitter
       href: https://twitter.com/myaseen208
-      icon: "fab fa-twitter"
-      aria-label: "Twitter"
-
+      aria-label: Twitter
 
 reference:
 - title: "Core Filtering Functions"
