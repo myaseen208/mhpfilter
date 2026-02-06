@@ -17,6 +17,7 @@ home:
 
 template:
   bootstrap: 5
+  mathjax: true
   params:
     bootswatch: united
     ganalytics: UA-116716530-2
