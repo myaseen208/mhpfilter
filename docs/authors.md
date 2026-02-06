@@ -5,12 +5,10 @@
 - **Muhammad Yaseen**. Author, maintainer.
   [](https://orcid.org/0000-0002-5923-1714)
 
-- **State Bank of Pakistan  
-  Original Methodology Author** . Contributor.  
+- **Javed Iqbal**. Contributor.  
   Original methodology author
 
-- **State Bank of Pakistan  
-  Original Methodology Author** . Contributor.  
+- **M. Nadim Hanif**. Contributor.  
   Original methodology author
 
 ## Citation
