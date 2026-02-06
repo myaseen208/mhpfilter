@@ -126,7 +126,7 @@ autoplot(mhp_filter(gdp, max_lambda = 10000, as_dt = FALSE))
 
 ``` bibtex
 @Manual{mhpfilter2026,
-  title = {{mhpfilter}: Modified Hodrick-Prescott Filter with Optimal Smoothing Parameter Selection},
+  title = {mhpfilter: Modified Hodrick-Prescott Filter with Optimal Smoothing Parameter Selection},
   author = {Muhammad Yaseen},
   year = {2026},
   note = {R package version 0.1.0},
