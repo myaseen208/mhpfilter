@@ -31,7 +31,7 @@ Description: High-performance implementation of the Modified Hodrick-Prescott (H
     and when the appropriate smoothing parameter is uncertain.
 License: MIT + file LICENSE
 Encoding: UTF-8
-URL: https://github.com/myaseen208/mhpfilter
+URL: https://myaseen208.com/mhpfilter/
 BugReports: https://github.com/myaseen208/mhpfilter/issues
 Depends: R (>= 4.0.0)
 Imports: 

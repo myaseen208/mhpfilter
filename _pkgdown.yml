@@ -1,42 +1,27 @@
 url: https://myaseen208.com/mhpfilter/
 
-home:
-  title: "mhpfilter: Modified Hodrick-Prescott Filter"
-  description: >
-    High-performance implementation of the Modified HP Filter for macroeconomic
-    time series decomposition with automatic optimal parameter selection via GCV.
-  links:
-  - text: Download from CRAN
-    href: https://cran.r-project.org/package=mhpfilter
-  - text: Browse source code
-    href: https://github.com/myaseen208/mhpfilter
-  - text: Report a bug
-    href: https://github.com/myaseen208/mhpfilter/issues
-
-
-
 template:
   bootstrap: 5
-  mathjax: true
   params:
     bootswatch: united
     ganalytics: UA-116716530-2
     docsearch:
       api_key: bdafb7ea4490644e670f470ee3ef537f
       index_name: mhpfilter
-
+      
+home:
+  title: mhpfilter
+  description: Modified Hodrick-Prescott Filter with Optimal Smoothing Parameter Selection
 
 toc:
   depth: 3
 
 authors:
-  Muhammmad Yaseen:
+  Muhammad Yaseen:
     href: https://www.researchgate.net/profile/Muhammad_Yaseen10
   Javed Iqbal:
-    html: "<p>State Bank of Pakistan<br><small>Original Methodology Author</small></p>"
   M. Nadim Hanif:
-    html: "<p>State Bank of Pakistan<br><small>Original Methodology Author</small></p>"
-
+  
 development:
   mode: auto
   version_label: default
