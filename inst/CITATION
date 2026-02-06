@@ -1,0 +1,51 @@
+citHeader("To cite mhpfilter in publications use:")
+
+bibentry(
+  bibtype  = "Manual",
+  title    = "{mhpfilter}: Modified Hodrick-Prescott Filter with Optimal Smoothing Parameter Selection",
+  author   = person("Muhammad", "Yaseen",
+                   email = "myaseen208@gmail.com",
+                   role = c("aut", "cre"),
+                   comment = c(ORCID = "0000-0002-5923-1714",
+                             affiliation = "School of Mathematical and Statistical Sciences, Clemson University")),
+  year     = "2026",
+  note     = "R package version 0.1.0",
+  url      = "https://github.com/myaseen208/mhpfilter",
+  doi      = "10.5281/zenodo.XXXXXXX",
+  textVersion = paste(
+    "Yaseen, M. (2026).",
+    "mhpfilter: Modified Hodrick-Prescott Filter with Optimal Smoothing Parameter Selection.",
+    "R package version 0.1.0.",
+    "https://github.com/myaseen208/mhpfilter"
+  )
+)
+
+bibentry(
+  bibtype  = "Article",
+  title    = "On smoothing macroeconomic time series using the modified {HP} filter",
+  author   = c(
+    person("M. Ali", "Choudhary"),
+    person("M. Nadim", "Hanif",
+          email = "Nadeem.hanif@sbp.org.pk",
+          comment = c(affiliation = "State Bank of Pakistan")),
+    person("Javed", "Iqbal",
+          email = "Javed.iqbal6@sbp.org.pk",
+          comment = c(affiliation = "State Bank of Pakistan"))
+  ),
+  journal  = "Applied Economics",
+  year     = "2014",
+  volume   = "46",
+  number   = "19",
+  pages    = "2205--2214",
+  doi      = "10.1080/00036846.2014.896982",
+  textVersion = paste(
+    "Choudhary, M.A., Hanif, M.N., & Iqbal, J. (2014).",
+    "On smoothing macroeconomic time series using the modified HP filter.",
+    "Applied Economics, 46(19), 2205-2214.",
+    "https://doi.org/10.1080/00036846.2014.896982"
+  )
+)
+
+citFooter(
+  "Please cite both the package and the original methodology paper when using mhpfilter in your research."
+)

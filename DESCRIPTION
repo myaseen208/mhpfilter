@@ -1,0 +1,53 @@
+Package: mhpfilter
+Type: Package
+Title: Modified Hodrick-Prescott Filter with Optimal Smoothing Parameter Selection
+Version: 0.1.0
+Authors@R: c(
+    person("Muhammad", "Yaseen", 
+           email = "myaseen208@gmail.com", 
+           role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-5923-1714")),
+    person("Javed", "Iqbal",
+           email = "Javed.iqbal6@sbp.org.pk", 
+           role = "ctb",
+           comment = "Original methodology author"),
+    person("M. Nadim", "Hanif",
+           email = "Nadeem.hanif@sbp.org.pk",
+           role = "ctb",
+           comment = "Original methodology author")
+    )
+Maintainer: Muhammad Yaseen <myaseen208@gmail.com>
+Description: High-performance implementation of the Modified Hodrick-Prescott (HP) Filter 
+    for decomposing macroeconomic time series into trend and cyclical components. Based on 
+    the methodology of Choudhary, Hanif and Iqbal (2014) <doi:10.1080/00036846.2014.896982> 
+    "On smoothing macroeconomic time series using the modified HP filter", which uses 
+    generalized cross-validation (GCV) to automatically select the optimal smoothing 
+    parameter lambda, following McDermott (1997). Unlike the standard HP filter that uses 
+    fixed lambda values (1600 for quarterly, 100 for annual data), this package estimates 
+    series-specific lambda values that minimize the GCV criterion. Implements efficient 
+    C++ routines via RcppArmadillo for fast computation, supports batch processing of 
+    multiple series, and provides comprehensive visualization tools using ggplot2. 
+    Particularly useful for cross-country macroeconomic comparisons, business cycle analysis, 
+    and when the appropriate smoothing parameter is uncertain.
+License: MIT + file LICENSE
+Encoding: UTF-8
+URL: https://github.com/myaseen208/mhpfilter
+BugReports: https://github.com/myaseen208/mhpfilter/issues
+Depends: R (>= 4.0.0)
+Imports: 
+    Rcpp (>= 1.0.0), 
+    RcppArmadillo (>= 0.9.0),
+    data.table (>= 1.14.0),
+    collapse (>= 2.0.0), 
+    ggplot2 (>= 3.4.0)
+LinkingTo: Rcpp, RcppArmadillo
+Suggests: 
+    knitr (>= 1.40), 
+    rmarkdown (>= 2.20), 
+    testthat (>= 3.0.0),
+    tidyverse (>= 2.0.0),
+    fastverse (>= 0.3.0)
+VignetteBuilder: knitr
+RoxygenNote: 7.3.3
+NeedsCompilation: yes
+Language: en-US

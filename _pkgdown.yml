@@ -1,0 +1,164 @@
+url: https://myaseen208.com/mhpfilter/
+
+home:
+  title: "mhpfilter: Modified Hodrick-Prescott Filter"
+  description: >
+    High-performance implementation of the Modified HP Filter for macroeconomic
+    time series decomposition with automatic optimal parameter selection via GCV.
+  links:
+  - text: Download from CRAN
+    href: https://cran.r-project.org/package=mhpfilter
+  - text: Browse source code
+    href: https://github.com/myaseen208/mhpfilter
+  - text: Report a bug
+    href: https://github.com/myaseen208/mhpfilter/issues
+
+
+
+template:
+  bootstrap: 5
+  params:
+    bootswatch: united
+    ganalytics: UA-116716530-2
+    docsearch:
+      api_key: bdafb7ea4490644e670f470ee3ef537f
+      index_name: mhpfilter
+
+
+toc:
+  depth: 3
+
+authors:
+  Muhammmad Yaseen:
+    href: https://www.researchgate.net/profile/Muhammad_Yaseen10
+  Javed Iqbal:
+    html: "<p>State Bank of Pakistan<br><small>Original Methodology Author</small></p>"
+  M. Nadim Hanif:
+    html: "<p>State Bank of Pakistan<br><small>Original Methodology Author</small></p>"
+
+development:
+  mode: auto
+  version_label: default
+
+
+
+navbar:
+  title: mhpfilter
+  type: default
+  left:
+    - icon: fa-home fa-lg
+      text: Home
+      href: index.html
+    - icon: fa-file-text-o
+      text: Get Started
+      href: articles/introduction.html
+    - icon: fa-code
+      text: Reference
+      href: reference/index.html
+    - icon: fa-book
+      text: Articles
+      menu:
+      - text: "Introduction to mhpfilter"
+        href: articles/introduction.html
+      - text: "Mathematical Methodology"
+        href: articles/methodology.html
+    - icon: fa-newspaper-o
+      text: News
+      href: news/index.html
+  right:
+    - text: "GitHub"
+      href: https://github.com/myaseen208/mhpfilter
+      icon: fa-github
+      aria-label: "GitHub repository"
+    - text: "CRAN"
+      href: https://cran.r-project.org/package=mhpfilter
+      icon: fa-download
+      aria-label: "CRAN"
+    - text: "ResearchGate"
+      href: https://www.researchgate.net/profile/Muhammad_Yaseen10
+      icon: fa-graduation-cap
+      aria-label: "ResearchGate"
+    - text: "Twitter"
+      href: https://twitter.com/myaseen208
+      icon: "fab fa-twitter"
+      aria-label: "Twitter"
+
+
+reference:
+- title: "Core Filtering Functions"
+  desc: >
+    Main functions for applying HP and Modified HP filters to time series data.
+    The Modified HP filter automatically selects the optimal smoothing parameter
+    lambda using generalized cross-validation (GCV).
+  contents:
+  - mhp_filter
+  - hp_filter
+  - mhp_compare
+  
+- title: "Batch Processing"
+  desc: >
+    Efficient batch processing functions for multiple time series. Ideal for
+    cross-country comparisons and analyzing multiple economic indicators
+    simultaneously.
+  contents:
+  - mhp_batch
+  - batch_compare
+
+- title: "Visualization Functions"
+  desc: >
+    Professional visualization tools using ggplot2. Create publication-ready
+    plots of trend-cycle decompositions with minimal code.
+  contents:
+  - autoplot.mhp
+  - plot_comparison
+  - plot_batch
+
+- title: "Utility Functions"
+  desc: >
+    Helper functions for extracting results and information from filter objects.
+  contents:
+  - get_lambda
+  - get_gcv
+  - print.mhp
+
+- title: "Package Documentation"
+  desc: >
+    Overall package documentation and information.
+  contents:
+  - mhpfilter-package
+
+articles:
+- title: "Getting Started"
+  navbar: ~
+  contents:
+  - introduction
+  
+- title: "Advanced Topics"
+  navbar: ~
+  contents:
+  - methodology
+  
+footer:
+  structure:
+    left: [developed_by, built_with]
+    right: [legal, citation]
+  components:
+    legal: >
+      Licensed under [MIT License](https://opensource.org/licenses/MIT)
+    citation: >
+      Please cite: [Choudhary, Hanif & Iqbal (2014)](https://doi.org/10.1080/00036846.2014.896982)
+      "On smoothing macroeconomic time series using the modified HP filter."
+      Applied Economics, 46(19), 2205-2214.
+
+repo:
+  url:
+    home: https://github.com/myaseen208/mhpfilter
+    source: https://github.com/myaseen208/mhpfilter/blob/main/
+    issue: https://github.com/myaseen208/mhpfilter/issues/
+    user: https://github.com/myaseen208/
+
+twitter:
+  creator: "@myaseen208"
+  site: "@myaseen208"
+  card: summary_large_image
+
