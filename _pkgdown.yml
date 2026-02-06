@@ -32,7 +32,9 @@ authors:
   Muhammmad Yaseen:
     href: https://www.researchgate.net/profile/Muhammad_Yaseen10
   Javed Iqbal:
+    html: "<p>State Bank of Pakistan<br><small>Original Methodology Author</small></p>"
   M. Nadim Hanif:
+    html: "<p>State Bank of Pakistan<br><small>Original Methodology Author</small></p>"
 
 development:
   mode: auto
