@@ -130,16 +130,16 @@ footer:
     legal: >
       Licensed under [MIT License](https://opensource.org/licenses/MIT)
     citation: >
-      Please cite: [Choudhary, Hanif & Iqbal (2014)](https://doi.org/10.1080/00036846.2014.896982)
+      Please cite: [Choudhary, Hanif & Iqbal (2014)](https://doi.org/10.1080/00036846.2014.894631)
       "On smoothing macroeconomic time series using the modified HP filter."
       Applied Economics, 46(19), 2205-2214.
 
 repo:
   url:
-    home: https://github.com/myaseen208/mhpfilter
+    home: https://myaseen208.com/mhpfilter
     source: https://github.com/myaseen208/mhpfilter/blob/main/
     issue: https://github.com/myaseen208/mhpfilter/issues/
-    user: https://github.com/myaseen208/
+    user: https://myaseen208.com/
 
 twitter:
   creator: "@myaseen208"

@@ -41,6 +41,7 @@ This function efficiently processes multiple series by:
 3. Using optimized C++ routines via RcppArmadillo
 }
 \examples{
+\donttest{
 # Example 1: Multiple macroeconomic series
 set.seed(456)
 n_periods <- 60
@@ -85,5 +86,6 @@ sector_results <- mhp_batch(sector_data, max_lambda = 50000)
 
 # View results for first few periods
 head(sector_results)
+}
 
 }

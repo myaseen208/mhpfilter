@@ -19,7 +19,7 @@ Authors@R: c(
 Maintainer: Muhammad Yaseen <myaseen208@gmail.com>
 Description: High-performance implementation of the Modified Hodrick-Prescott (HP) Filter 
     for decomposing macroeconomic time series into trend and cyclical components. Based on 
-    the methodology of Choudhary, Hanif and Iqbal (2014) <doi:10.1080/00036846.2014.896982> 
+    the methodology of Choudhary, Hanif and Iqbal (2014) <doi:10.1080/00036846.2014.894631> 
     "On smoothing macroeconomic time series using the modified HP filter", which uses 
     generalized cross-validation (GCV) to automatically select the optimal smoothing 
     parameter lambda, following McDermott (1997). Unlike the standard HP filter that uses 
@@ -35,12 +35,14 @@ URL: https://myaseen208.com/mhpfilter/
 BugReports: https://github.com/myaseen208/mhpfilter/issues
 Depends: R (>= 4.0.0)
 Imports: 
-    Rcpp (>= 1.0.0), 
-    RcppArmadillo (>= 0.9.0),
+    Rcpp (>= 1.0.0),
+    RcppArmadillo (>= 0.12.0.0.0),
     data.table (>= 1.14.0),
     collapse (>= 2.0.0), 
     ggplot2 (>= 3.4.0)
-LinkingTo: Rcpp, RcppArmadillo
+LinkingTo:
+    Rcpp, 
+    RcppArmadillo
 Suggests: 
     knitr (>= 1.40), 
     rmarkdown (>= 2.20), 

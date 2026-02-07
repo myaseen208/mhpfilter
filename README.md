@@ -7,7 +7,7 @@
 [![Monthly downloads](https://cranlogs.r-pkg.org/badges/last-month/mhpfilter?color=blue)](https://cran.r-project.org/package=mhpfilter)
 [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.XXXXXXX.svg)](https://doi.org/10.5281/zenodo.XXXXXXX)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.XXXXXXX.svg)](https://doi.org/10.1080/00036846.2014.894631)
 <!-- badges: end -->
 
 ## Overview
@@ -25,7 +25,7 @@
 
 ## Methodology
 
-Based on the research of [Choudhary, Hanif & Iqbal (2014)](https://doi.org/10.1080/00036846.2014.896982):
+Based on the research of [Choudhary, Hanif & Iqbal (2014)](https://doi.org/10.1080/00036846.2014.894631):
 
 > Choudhary, M.A., Hanif, M.N., & Iqbal, J. (2014). On smoothing macroeconomic time series using the modified HP filter. *Applied Economics*, 46(19), 2205-2214.
 
@@ -70,8 +70,6 @@ devtools::install_github("myaseen208/mhpfilter")
 install.packages("mhpfilter_0.1.0.tar.gz", repos = NULL, type = "source")
 ```
 
-For detailed setup instructions, see [Installation Guide](https://myaseen208.github.io/mhpfilter/articles/installation.html).
-
 ## Quick Start
 
 ```r
@@ -105,10 +103,10 @@ autoplot(mhp_filter(gdp, max_lambda = 10000, as_dt = FALSE))
 
 ## Documentation
 
-- 📘 [Get Started](https://myaseen208.github.io/mhpfilter/articles/introduction.html)
-- 📐 [Mathematical Methodology](https://myaseen208.github.io/mhpfilter/articles/methodology.html)
-- 📚 [Function Reference](https://myaseen208.github.io/mhpfilter/reference/index.html)
-- 💻 [Examples and Tutorials](https://myaseen208.github.io/mhpfilter/articles/)
+- 📘 [Get Started](https://myaseen208.com/mhpfilter/articles/introduction.html)
+- 📐 [Mathematical Methodology](https://myaseen208.com/mhpfilter/articles/methodology.html)
+- 📚 [Function Reference](https://myaseen208.com/mhpfilter/reference/index.html)
+- 💻 [Examples and Tutorials](https://myaseen208.com/mhpfilter/articles/)
 
 ## Citation
 
@@ -118,7 +116,7 @@ autoplot(mhp_filter(gdp, max_lambda = 10000, as_dt = FALSE))
   author = {Muhammad Yaseen},
   year = {2026},
   note = {R package version 0.1.0},
-  url = {https://github.com/myaseen208/mhpfilter},
+  url = {https://myaseen208.com/mhpfilter},
 }
 ```
 
@@ -130,4 +128,4 @@ autoplot(mhp_filter(gdp, max_lambda = 10000, as_dt = FALSE))
 
 ## License
 
-MIT © [Muhammad Yaseen](https://github.com/myaseen208)
+MIT © [Muhammad Yaseen](https://myaseen208.com)

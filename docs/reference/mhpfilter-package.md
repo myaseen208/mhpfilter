@@ -75,7 +75,7 @@ McDermott, C.J. (1997). Note on the modified Hodrick-Prescott filter.
 
 Useful links:
 
-- <https://github.com/myaseen208/mhpfilter>
+- <https://myaseen208.com/mhpfilter/>
 
 - Report bugs at <https://github.com/myaseen208/mhpfilter/issues>
 

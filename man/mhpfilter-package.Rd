@@ -58,7 +58,7 @@ McDermott, C.J. (1997). Note on the modified Hodrick-Prescott filter.
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/myaseen208/mhpfilter}
+  \item \url{https://myaseen208.com/mhpfilter/}
   \item Report bugs at \url{https://github.com/myaseen208/mhpfilter/issues}
 }
 

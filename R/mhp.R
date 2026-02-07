@@ -5,6 +5,7 @@
 #' @importFrom collapse fmean fsd
 #' @importFrom ggplot2 ggplot aes geom_line geom_hline labs theme_minimal
 #'   scale_color_manual facet_wrap theme element_text ggtitle xlab ylab
+#' @importFrom stats setNames
 NULL
 
 #' mhpfilter: Fast Modified Hodrick-Prescott Filter
@@ -309,6 +310,7 @@ hp_filter <- function(x, lambda = 1600, as_dt = TRUE) {
 #' 3. Using optimized C++ routines via RcppArmadillo
 #'
 #' @examples
+#' \donttest{
 #' # Example 1: Multiple macroeconomic series
 #' set.seed(456)
 #' n_periods <- 60
@@ -353,6 +355,7 @@ hp_filter <- function(x, lambda = 1600, as_dt = TRUE) {
 #'
 #' # View results for first few periods
 #' head(sector_results)
+#' }
 #'
 #' @export
 mhp_batch <- function(X, max_lambda = 100000L) {

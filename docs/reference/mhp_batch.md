@@ -69,6 +69,7 @@ search for each series 3. Using optimized C++ routines via RcppArmadillo
 ## Examples
 
 ``` r
+# \donttest{
 # Example 1: Multiple macroeconomic series
 set.seed(456)
 n_periods <- 60
@@ -128,4 +129,5 @@ head(sector_results)
 #> 4: Agriculture     4 2.1350412 2.128569  0.006472319
 #> 5: Agriculture     5 2.5815389 2.363185  0.218353706
 #> 6: Agriculture     6 3.1001873 2.500176  0.600011407
+# }
 ```
