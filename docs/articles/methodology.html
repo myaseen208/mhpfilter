@@ -86,7 +86,7 @@ Hanif</h4>
 Pakistan<br><a class="author_email" href="mailto:#"></a><a href="mailto:Nadeem.hanif@sbp.org.pk" class="email">Nadeem.hanif@sbp.org.pk</a>
       </address>
                   
-            <h4 data-toc-skip class="date">2026-02-06</h4>
+            <h4 data-toc-skip class="date">2026-02-13</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/myaseen208/mhpfilter/blob/main/vignettes/methodology.Rmd" class="external-link"><code>vignettes/methodology.Rmd</code></a></small>
       <div class="d-none name"><code>methodology.Rmd</code></div>
@@ -437,7 +437,7 @@ simulations.</p>
 <span><span class="va">mse_mhp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="op">(</span><span class="va">mhp_result</span><span class="op">$</span><span class="va">cycle</span> <span class="op">-</span> <span class="va">cycle_true</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span>
 <span><span class="va">mse_hp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="op">(</span><span class="va">hp_result</span><span class="op">$</span><span class="va">cycle</span> <span class="op">-</span> <span class="va">cycle_true</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">oldpar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">cycle_true</span>, type <span class="op">=</span> <span class="st">"l"</span>, lwd <span class="op">=</span> <span class="fl">2</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">cycle_true</span>, <span class="va">mhp_result</span><span class="op">$</span><span class="va">cycle</span>, <span class="va">hp_result</span><span class="op">$</span><span class="va">cycle</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>     main <span class="op">=</span> <span class="st">"True vs Estimated Cycles"</span>, ylab <span class="op">=</span> <span class="st">"Cycle"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">mhp_result</span><span class="op">$</span><span class="va">cycle</span>, col <span class="op">=</span> <span class="st">"blue"</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
@@ -452,6 +452,8 @@ simulations.</p>
 Simulation: True vs Estimated Cycles
 </p>
 </div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span><span class="va">oldpar</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="empirical-evidence">3.2 Empirical Evidence<a class="anchor" aria-label="anchor" href="#empirical-evidence"></a>
@@ -492,7 +494,7 @@ close to conventional values</li>
 <li>AR(1) coefficients are relatively robust to filter choice</li>
 <li>Correlations between series can differ significantly</li>
 </ol>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Demonstrate cross-country variation</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">999</span><span class="op">)</span></span>
 <span></span>
@@ -627,7 +629,7 @@ search range:</p>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># For most macro applications, 10000 is sufficient</span></span>
 <span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mhp_filter.html">mhp_filter</a></span><span class="op">(</span><span class="va">y</span>, max_lambda <span class="op">=</span> <span class="fl">10000</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Optimal lambda:"</span>, <span class="fu"><a href="../reference/get_lambda.html">get_lambda</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span>
@@ -642,7 +644,7 @@ search range:</p>
 <h3 id="interpreting-results">5.3 Interpreting Results<a class="anchor" aria-label="anchor" href="#interpreting-results"></a>
 </h3>
 <p>Key diagnostics when comparing HP vs Modified HP:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">comp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mhp_compare.html">mhp_compare</a></span><span class="op">(</span><span class="va">y</span>, frequency <span class="op">=</span> <span class="st">"quarterly"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">comp</span><span class="op">)</span></span>
 <span><span class="co">#&gt;         method lambda cycle_sd   cycle_mean       ar1 cycle_range      gcv</span></span>

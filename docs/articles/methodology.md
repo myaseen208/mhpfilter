@@ -314,7 +314,7 @@ hp_result <- hp_filter(y, lambda = 1600)
 mse_mhp <- mean((mhp_result$cycle - cycle_true)^2)
 mse_hp <- mean((hp_result$cycle - cycle_true)^2)
 
-par(mfrow = c(1, 1))
+oldpar <- par(mfrow = c(1, 1))
 plot(cycle_true, type = "l", lwd = 2, ylim = range(c(cycle_true, mhp_result$cycle, hp_result$cycle)),
      main = "True vs Estimated Cycles", ylab = "Cycle")
 lines(mhp_result$cycle, col = "blue", lwd = 2)
@@ -330,6 +330,10 @@ legend("topright",
 Cycles](methodology_files/figure-html/simulation-1.png)
 
 Simulation: True vs Estimated Cycles
+
+``` r
+par(oldpar)
+```
 
 ### 3.2 Empirical Evidence
 

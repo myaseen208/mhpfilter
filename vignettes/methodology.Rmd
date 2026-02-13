@@ -286,7 +286,7 @@ hp_result <- hp_filter(y, lambda = 1600)
 mse_mhp <- mean((mhp_result$cycle - cycle_true)^2)
 mse_hp <- mean((hp_result$cycle - cycle_true)^2)
 
-par(mfrow = c(1, 1))
+oldpar <- par(mfrow = c(1, 1))
 plot(cycle_true, type = "l", lwd = 2, ylim = range(c(cycle_true, mhp_result$cycle, hp_result$cycle)),
      main = "True vs Estimated Cycles", ylab = "Cycle")
 lines(mhp_result$cycle, col = "blue", lwd = 2)
@@ -296,6 +296,7 @@ legend("topright",
          paste0("MHP (λ=", get_lambda(mhp_result), ", MSE=", round(mse_mhp, 2), ")"),
          paste0("HP (λ=1600, MSE=", round(mse_hp, 2), ")")),
        col = c("black", "blue", "red"), lty = c(1, 1, 2), lwd = 2)
+par(oldpar)
 ```
 
 ### 3.2 Empirical Evidence

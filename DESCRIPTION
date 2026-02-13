@@ -22,13 +22,15 @@ Description: High-performance implementation of the Modified Hodrick-Prescott (H
     the methodology of Choudhary, Hanif and Iqbal (2014) <doi:10.1080/00036846.2014.894631> 
     "On smoothing macroeconomic time series using the modified HP filter", which uses 
     generalized cross-validation (GCV) to automatically select the optimal smoothing 
-    parameter lambda, following McDermott (1997). Unlike the standard HP filter that uses 
-    fixed lambda values (1600 for quarterly, 100 for annual data), this package estimates 
-    series-specific lambda values that minimize the GCV criterion. Implements efficient 
-    C++ routines via RcppArmadillo for fast computation, supports batch processing of 
-    multiple series, and provides comprehensive visualization tools using ggplot2. 
-    Particularly useful for cross-country macroeconomic comparisons, business cycle analysis, 
-    and when the appropriate smoothing parameter is uncertain.
+    parameter lambda, following McDermott (1997) "An automatic method for choosing the 
+    smoothing parameter in the HP filter" (as described in Coe and McDermott (1997) 
+    <doi:10.2307/3867497>). Unlike the standard HP filter that uses fixed lambda values 
+    (1600 for quarterly, 100 for annual data), this package estimates series-specific lambda 
+    values that minimize the GCV criterion. Implements efficient C++ routines via 
+    'RcppArmadillo' for fast computation, supports batch processing of multiple series, and 
+    provides comprehensive visualization tools using 'ggplot2'. Particularly useful for 
+    cross-country macroeconomic comparisons, business cycle analysis, and when the 
+    appropriate smoothing parameter is uncertain.
 License: MIT + file LICENSE
 Encoding: UTF-8
 URL: https://myaseen208.com/mhpfilter/
