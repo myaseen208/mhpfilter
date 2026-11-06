@@ -1,63 +1,66 @@
-# Plot Method for mhp Objects
+# Plot the decomposition of a series
 
-Create a publication-quality ggplot2 visualization of Modified HP filter
-results.
+`autoplot()` (and
+[`plot()`](https://rdrr.io/r/graphics/plot.default.html)) of a filter
+result draws the series with its trend and, below, the cycle, with the
+time of a `ts` on the horizontal axis. For the modified HP filter
+`which = "gcv"` draws the criterion against \\\lambda\\; for the fully
+modified HP filter `which = "lambda"` draws the smoothing parameters
+\\\lambda_t\\ and `which = "loss"` the end-point loss.
 
 ## Usage
 
 ``` r
-# S3 method for class 'mhp'
-autoplot(object, ...)
+autoplot.mhp(object, which = c("decomposition", "gcv", "lambda", "loss"), ...)
 ```
 
 ## Arguments
 
 - object:
 
-  An object of class "mhp" from `mhp_filter(as_dt = FALSE)`.
+  a result of
+  [`hp_filter()`](https://myaseen208.com/mhpfilter/reference/hp_filter.md),
+  [`mhp_filter()`](https://myaseen208.com/mhpfilter/reference/mhp_filter.md)
+  or
+  [`fmhp_filter()`](https://myaseen208.com/mhpfilter/reference/fmhp_filter.md)
+  with `as_dt = FALSE`.
+
+- which:
+
+  `"decomposition"` (default), `"gcv"` (modified HP), `"lambda"` or
+  `"loss"` (fully modified HP).
 
 - ...:
 
-  Additional arguments passed to ggplot2 functions.
+  not used.
 
 ## Value
 
-A ggplot object.
+A `ggplot` object.
 
-## Details
+## Author
 
-Creates a three-panel plot showing: 1. Original series with trend
-overlay 2. Trend component 3. Cyclical component
-
-The plot includes optimal lambda and GCV in the title, and uses
-consistent formatting suitable for publications.
+Muhammad Yaseen (<myaseen208@gmail.com>)
 
 ## Examples
 
 ``` r
-set.seed(42)
-n <- 120
-# Create a realistic macroeconomic series
-trend <- cumsum(c(0, rnorm(n - 1, mean = 0.5, sd = 0.3)))
-cycle <- 3 * sin(2 * pi * (1:n) / 30) + rnorm(n, sd = 0.8)
-y <- trend + cycle + 100 # Add level for realism
+data(us_macro)
+f <-
+  fmhp_filter(
+      x               = us_macro$gdp
+    , max_lambda      = 3000
+    , k_linear        = 15
+    , k_quadratic     = NULL
+    , alpha_linear    = seq(from = 0, to = 2000, by = 10)
+    , alpha_quadratic = seq(from = 0, to = 2000, by = 5)
+    , schemes         = c("linear", "quadratic")
+    , form            = "rows"
+    , lambda          = NULL
+    , log_scale       = TRUE
+    , as_dt           = FALSE
+    )
+ggplot2::autoplot(object = f)
 
-result <- mhp_filter(y, max_lambda = 10000, as_dt = FALSE)
-
-if (require(ggplot2)) {
-  # Basic plot
-  autoplot(result)
-
-  # Customized plot
-  p <- autoplot(result)
-  p <- p +
-    ggplot2::theme(
-      plot.title = ggplot2::element_text(size = 14, face = "bold"),
-      strip.text = ggplot2::element_text(size = 12, face = "bold")
-    ) +
-    ggplot2::labs(caption = "Data: Simulated macroeconomic series")
-  print(p)
-}
-#> Loading required package: ggplot2
-
+plot(x = f, which = "lambda")
 ```

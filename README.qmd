@@ -1,0 +1,135 @@
+---
+title: "mhpfilter: Modified and Fully Modified Hodrick-Prescott Filters"
+format:
+  gfm:
+    # no ".png" appended to the badge URLs (a badge such as .../grand-total/<pkg>.png would show "null")
+    default-image-extension: ""
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(collapse = FALSE, comment = "")
+```
+
+```{r badges, include = FALSE}
+# badges computed from DESCRIPTION, so that they never go stale
+desc  <- read.dcf("DESCRIPTION", fields = c("Version", "Depends", "License"))
+r_min <- sub(".*R \\(>= *([0-9.]+)\\).*", "\\1", desc[, "Depends"])
+enc   <- function(x) {
+  x <- gsub("-", "--", x, fixed = TRUE)
+  for (p in list(c(" ", "%20"), c("(", "%28"), c(")", "%29"), c(">", "%3E"), c("=", "%3D"), c("+", "%2B"), c("|", "%7C"))) {
+    x <- gsub(p[1L], p[2L], x, fixed = TRUE)
+  }
+  x
+}
+lic   <- sub(" \\+ file LICENSE$", "", desc[, "License"])
+lic_url <- if (grepl("^MIT", lic)) "https://opensource.org/licenses/MIT" else if (grepl("|", lic, fixed = TRUE))
+  "https://www.gnu.org/licenses/licenses.html" else if (grepl("GPL-3", lic))
+  "https://www.gnu.org/licenses/gpl-3.0.html" else "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html"
+```
+
+[![CRAN release](https://www.r-pkg.org/badges/version-last-release/mhpfilter)](https://CRAN.R-project.org/package=mhpfilter)
+[![CRAN checks](https://badges.cranchecks.info/worst/mhpfilter.svg)](https://cran.r-project.org/web/checks/check_results_mhpfilter.html)
+[![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/mhpfilter?color=green)](https://CRAN.R-project.org/package=mhpfilter)
+[![Monthly downloads](https://cranlogs.r-pkg.org/badges/last-month/mhpfilter?color=green)](https://CRAN.R-project.org/package=mhpfilter)
+[![r-universe](https://myaseen208.r-universe.dev/badges/mhpfilter)](https://myaseen208.r-universe.dev/mhpfilter)
+[![R-CMD-check](https://github.com/myaseen208/mhpfilter/actions/workflows/R-CMD-check.yml/badge.svg)](https://github.com/myaseen208/mhpfilter/actions/workflows/R-CMD-check.yml)
+[![Development version](https://img.shields.io/badge/devel%20version-`r enc(desc[, "Version"])`-orange.svg)](https://github.com/myaseen208/mhpfilter)
+[![Minimal R version](https://img.shields.io/badge/R%3E%3D-`r r_min`-6666ff.svg)](https://cran.r-project.org/)
+[![Dependencies](https://tinyverse.netlify.app/badge/mhpfilter)](https://CRAN.R-project.org/package=mhpfilter)
+[![License](https://img.shields.io/badge/License-`r enc(lic)`-blue.svg)](`r lic_url`)
+[![Project Status: Active](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![Last commit](https://img.shields.io/github/last-commit/myaseen208/mhpfilter)](https://github.com/myaseen208/mhpfilter/commits)
+
+## Overview
+
+**mhpfilter** splits macroeconomic time series into a trend and a cycle with the Hodrick-Prescott (HP) filter and
+two versions whose settings come from the data:
+
+* `hp_filter()`: the HP filter with a fixed smoothing parameter (1600 quarterly, 100 annual);
+* `mhp_filter()`: the modified HP filter of McDermott (1997), assessed by Choudhary, Hanif and Iqbal (2014): every
+  series gets the smoothing parameter that minimises a generalised cross-validation criterion (the published
+  approximation, or the exact criterion);
+* `fmhp_filter()`: the fully modified HP filter of Hanif, Iqbal and Choudhary (2017), which also reduces the
+  end-point bias of the HP filter by raising the smoothing parameter at the first and last observations, with
+  linear or quadratic weights chosen to minimise the end-point loss of Bloechl (2014).
+
+Around them:
+
+* many series at once (`mhp_batch()`, `fmhp_batch()`), the filters compared (`mhp_compare()`, `batch_compare()`,
+  `fmhp_compare()`);
+* the weights, gain functions and end-point loss of any HP-type filter (`hp_weights()`, `hp_gain()`, `hp_loss()`,
+  `hp_schedule()`);
+* simulated trend-plus-cycle series and the power comparison of the papers (`mhp_designs()`, `mhp_simulate()`,
+  `fmhp_simulation()`);
+* `ggplot2` graphics, a plain-language interpretation of every result (`mhp_interpret()`), the references of every
+  method (`mhp_cite()`) and an application that runs all of this without code (`mhp_app()`).
+
+Version 1.0.0 keeps every function, argument and result of version 0.1.0 and adds the fully modified HP filter.
+Every filter is one banded linear solve, so the search over 100000 values of the smoothing parameter for 200 observations
+takes 1.3 s instead of 6.4 s, and longer series gain more; the fully modified HP filter reproduces the published MATLAB code, and the end-point
+losses of the HP filter in Tables 3a and 3b of Hanif et al. (2017) are reproduced.
+
+## Installation
+
+```r
+install.packages("mhpfilter")
+# development version
+# install.packages("remotes")
+remotes::install_github("myaseen208/mhpfilter")
+```
+
+## Quick start
+
+```{r quick}
+library(mhpfilter)
+data(us_macro)
+gdp <- ts(data = us_macro$gdp, start = c(1959, 1), frequency = 4)
+fm <-
+  fmhp_filter(
+      x               = gdp
+    , max_lambda      = 3000
+    , k_linear        = 15
+    , k_quadratic     = NULL
+    , alpha_linear    = seq(from = 0, to = 2000, by = 10)
+    , alpha_quadratic = seq(from = 0, to = 2000, by = 5)
+    , schemes         = c("linear", "quadratic")
+    , form            = "rows"
+    , lambda          = NULL
+    , log_scale       = TRUE
+    , as_dt           = FALSE
+    )
+fm
+fmhp_compare(
+    x          = gdp
+  , frequency  = "quarterly"
+  , max_lambda = 3000
+  , log_scale  = TRUE
+  , end_share  = 0.1
+  )
+```
+
+```{r quick-plot, fig.height = 6}
+plot(x = fm)
+```
+
+## Learn more
+
+* Vignettes: `browseVignettes("mhpfilter")`, starting with `mhpfilter_01_getting_started`; PDF versions on the site.
+* Site: <https://myaseen208.com/mhpfilter/>
+* Notation: `mhp_notation()`
+* References of the methods behind a result: `mhp_cite()`
+
+## Citation
+
+```{r citation, echo = FALSE, comment = ""}
+print(citation(package = "mhpfilter")[1L], style = "text")
+```
+
+BibTeX:
+
+```{r citation-bib, echo = FALSE, comment = ""}
+print(citation(package = "mhpfilter")[1L], style = "bibtex")
+```
+
+Please also cite the methods you use: `citation("mhpfilter")` lists them with the package, and `mhp_cite(x)` gives the
+references of a single result.

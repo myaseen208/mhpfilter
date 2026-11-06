@@ -1,148 +1,104 @@
 url: https://myaseen208.com/mhpfilter/
+title: Modified and Fully Modified Hodrick-Prescott Filters
 
 template:
   bootstrap: 5
-  params:
-    bootswatch: united
-    ganalytics: UA-116716530-2
-    docsearch:
-      api_key: bdafb7ea4490644e670f470ee3ef537f
-      index_name: mhpfilter
-      
+  bootswatch: flatly
+  math-rendering: mathjax
+  bslib:
+    base_font:
+      google: Crimson Pro
+    heading_font:
+      google: Crimson Pro
+    code_font:
+      google: JetBrains Mono
+    bg: "#ffffff"
+    fg: "#1a1a1a"
+    primary: "#2c5f8a"
+    link-color: "#2c5f8a"
+
 home:
-  title: mhpfilter
-  description: Modified Hodrick-Prescott Filter with Optimal Smoothing Parameter Selection
-
-toc:
-  depth: 3
-
-authors:
-  Muhammad Yaseen:
-    href: https://www.researchgate.net/profile/Muhammad_Yaseen10
-  Javed Iqbal:
-  M. Nadim Hanif:
-  
-development:
-  mode: auto
-  version_label: default
-
+  sidebar:
+    structure: [links, license, citation, authors, dev]
 
 navbar:
-  title: mhpfilter
-  type: default
-  left:
-    - icon: fa-home fa-lg
-      text: Home
-      href: index.html
-    - icon: fa-file-text-o
-      text: Get Started
-      href: articles/introduction.html
-    - icon: fa-code
-      text: Reference
-      href: reference/index.html
-    - text: Articles
-      icon: fa-book
-      menu:
-        - text: "Introduction to mhpfilter"
-          href: articles/introduction.html
-        - text: "Mathematical Methodology"
-          href: articles/methodology.html
-    - icon: fa-newspaper-o
-      text: News
-      href: news/index.html
-  right:
-    - text: GitHub
-      icon: fa-github
-      href: https://github.com/myaseen208/mhpfilter
-      aria-label: GitHub repository
-    - text: CRAN
-      icon: fa-download
-      href: https://cran.r-project.org/package=mhpfilter
-      aria-label: CRAN
-    - text: ResearchGate
-      icon: fa-graduation-cap
-      href: https://www.researchgate.net/profile/Muhammad_Yaseen10
-      aria-label: ResearchGate
-    - text: Twitter
-      icon: fab fa-twitter
-      href: https://twitter.com/myaseen208
-      aria-label: Twitter
-
-reference:
-- title: "Core Filtering Functions"
-  desc: >
-    Main functions for applying HP and Modified HP filters to time series data.
-    The Modified HP filter automatically selects the optimal smoothing parameter
-    lambda using generalized cross-validation (GCV).
-  contents:
-  - mhp_filter
-  - hp_filter
-  - mhp_compare
-  
-- title: "Batch Processing"
-  desc: >
-    Efficient batch processing functions for multiple time series. Ideal for
-    cross-country comparisons and analyzing multiple economic indicators
-    simultaneously.
-  contents:
-  - mhp_batch
-  - batch_compare
-
-- title: "Visualization Functions"
-  desc: >
-    Professional visualization tools using ggplot2. Create publication-ready
-    plots of trend-cycle decompositions with minimal code.
-  contents:
-  - autoplot.mhp
-  - plot_comparison
-  - plot_batch
-
-- title: "Utility Functions"
-  desc: >
-    Helper functions for extracting results and information from filter objects.
-  contents:
-  - get_lambda
-  - get_gcv
-  - print.mhp
-
-- title: "Package Documentation"
-  desc: >
-    Overall package documentation and information.
-  contents:
-  - mhpfilter-package
+  structure:
+    left:  [home, reference, articles, pdf, news]
+    right: [search, github]
+  components:
+    pdf:
+      text: PDF
+      href: pdf/index.html
 
 articles:
-- title: "Getting Started"
-  navbar: ~
-  contents:
-  - introduction
-  
-- title: "Advanced Topics"
-  navbar: ~
-  contents:
-  - methodology
-  
+  - title: Getting started
+    navbar: Getting started
+    contents:
+      - mhpfilter_01_getting_started
+      - mhpfilter_02_theory
+  - title: The two papers
+    navbar: Methods
+    contents:
+      - mhpfilter_03_modified_hp
+      - mhpfilter_04_fully_modified_hp
+      - mhpfilter_05_simulation
+  - title: Application, validation and speed
+    navbar: Application and validation
+    contents:
+      - mhpfilter_06_app
+      - mhpfilter_07_validation
+
+reference:
+  # every help page must appear (tools/check-pkgdown-index.R)
+  - title: Filters
+    desc: HP, modified HP (Choudhary et al. 2014) and fully modified HP (Hanif et al. 2017) filters.
+    contents:
+      - hp_filter
+      - mhp_filter
+      - fmhp_filter
+  - title: Many series and comparisons
+    contents:
+      - mhp_batch
+      - fmhp_batch
+      - mhp_compare
+      - fmhp_compare
+  - title: End-point diagnostics
+    desc: Weights, gains and end-point loss of HP-type filters with any smoothing parameters.
+    contents:
+      - hp_schedule
+      - hp_weights
+      - hp_gain
+      - hp_loss
+  - title: Simulation
+    contents:
+      - mhp_designs
+      - mhp_simulate
+      - fmhp_simulation
+  - title: Results, plots and interpretation
+    contents:
+      - get_lambda
+      - print.mhp
+      - autoplot.mhp
+      - plot_comparison
+      - plot_batch
+      - mhp_interpret
+      - mhp-methods
+  - title: Application
+    contents:
+      - mhp_app
+  - title: Data
+    contents:
+      - us_macro
+  - title: Utilities
+    contents:
+      - mhp_cite
+      - mhp_theme
+      - mhp_save
+      - mhp_notation
+      - mhp_reference
+      - mhpfilter-package
+
 footer:
   structure:
-    left: [developed_by, built_with]
-    right: [legal, citation]
-  components:
-    legal: >
-      Licensed under [MIT License](https://opensource.org/licenses/MIT)
-    citation: >
-      Please cite: [Choudhary, Hanif & Iqbal (2014)](https://doi.org/10.1080/00036846.2014.894631)
-      "On smoothing macroeconomic time series using the modified HP filter."
-      Applied Economics, 46(19), 2205-2214.
-
-repo:
-  url:
-    home: https://myaseen208.com/mhpfilter
-    source: https://github.com/myaseen208/mhpfilter/blob/main/
-    issue: https://github.com/myaseen208/mhpfilter/issues/
-    user: https://myaseen208.com/
-
-twitter:
-  creator: "@myaseen208"
-  site: "@myaseen208"
-  card: summary_large_image
-
+    left: developed_by
+    right: built_with

@@ -1,10 +1,15 @@
-pandoc: 3.6.3
-pkgdown: 2.2.0
+pandoc: '3.10'
+pkgdown: 2.2.1
 pkgdown_sha: ~
 articles:
-  introduction: introduction.html
-  methodology: methodology.html
-last_built: 2026-02-13T07:40Z
+  mhpfilter_01_getting_started: mhpfilter_01_getting_started.html
+  mhpfilter_02_theory: mhpfilter_02_theory.html
+  mhpfilter_03_modified_hp: mhpfilter_03_modified_hp.html
+  mhpfilter_04_fully_modified_hp: mhpfilter_04_fully_modified_hp.html
+  mhpfilter_05_simulation: mhpfilter_05_simulation.html
+  mhpfilter_06_app: mhpfilter_06_app.html
+  mhpfilter_07_validation: mhpfilter_07_validation.html
+last_built: 2026-11-06T03:18Z
 urls:
   reference: https://myaseen208.com/mhpfilter/reference
   article: https://myaseen208.com/mhpfilter/articles

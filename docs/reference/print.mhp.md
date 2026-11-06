@@ -1,6 +1,13 @@
-# Print Method for mhp Objects
+# Print a filter result
 
-Print a summary of Modified HP filter results.
+[`print()`](https://rdrr.io/r/base/print.html) of a result of
+[`hp_filter()`](https://myaseen208.com/mhpfilter/reference/hp_filter.md),
+[`mhp_filter()`](https://myaseen208.com/mhpfilter/reference/mhp_filter.md)
+or
+[`fmhp_filter()`](https://myaseen208.com/mhpfilter/reference/fmhp_filter.md)
+(with `as_dt = FALSE`) shows the smoothing parameter, the criterion and
+summaries of the cycle, as in version 0.1.0, and the sources of the
+method.
 
 ## Usage
 
@@ -13,39 +20,51 @@ print(x, ...)
 
 - x:
 
-  An object of class "mhp" from `mhp_filter(as_dt = FALSE)`.
+  a result of
+  [`hp_filter()`](https://myaseen208.com/mhpfilter/reference/hp_filter.md),
+  [`mhp_filter()`](https://myaseen208.com/mhpfilter/reference/mhp_filter.md)
+  or
+  [`fmhp_filter()`](https://myaseen208.com/mhpfilter/reference/fmhp_filter.md)
+  with `as_dt = FALSE`.
 
 - ...:
 
-  Additional arguments (ignored).
+  further arguments (`digits`).
 
 ## Value
 
-Invisibly returns the input object.
+`x`, invisibly.
 
-## Details
+## Author
 
-Prints a formatted summary including: - Number of observations - Optimal
-lambda value - GCV criterion value - Cycle statistics (mean, SD, AR1)
-
-Suitable for quick inspection of filter results.
+Muhammad Yaseen (<myaseen208@gmail.com>)
 
 ## Examples
 
 ``` r
-set.seed(42)
-y <- cumsum(rnorm(100)) + sin((1:100) * pi / 20)
-result <- mhp_filter(y, max_lambda = 10000, as_dt = FALSE)
-print(result)
+data(us_macro)
+m <-
+  mhp_filter(
+      x          = log(us_macro$gdp)
+    , max_lambda = 100000
+    , as_dt      = FALSE
+    , log_scale  = FALSE
+    , criterion  = c("approximate", "exact")
+    )
+print(x = m)
 #> Modified HP Filter Result
-#> ============================== 
-#> Observations: 100 
-#> Optimal lambda: 592 
-#> GCV: 2.317e+00 
+#> ==============================
+#> Observations: 203 
+#> Optimal lambda: 683 
+#> GCV: 2.82e-04 
 #> 
 #> Cycle Statistics:
-#>   Mean: -3.858e-14 
-#>   SD:   1.323 
-#>   AR1:  0.7203 
-#>   Range: 6.537 
+#>   Mean: -1.634e-13 
+#>   SD:   0.01333 
+#>   AR1:  0.828 
+#>   Range: 0.07802 
+#> 
+#> Sources: Hodrick and Prescott (1997); McDermott (1997); Coe and McDermott
+#> (1997); Choudhary et al. (2014); Choudhary et al. (2014, MATLAB code). Full
+#> references: mhp_cite(x).
 ```

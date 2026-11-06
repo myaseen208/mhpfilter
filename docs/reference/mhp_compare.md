@@ -1,112 +1,118 @@
-# Compare HP vs Modified HP Filter
+# Compare the HP and the modified HP filter
 
-Compare the standard HP filter with the Modified HP filter for a single
-series. Provides summary statistics for both methods including cycle
-properties.
+`mhp_compare()` filters one series with the HP filter at the
+conventional \\\lambda\\ of its frequency and with the modified HP
+filter, and compares the cycles; `batch_compare()` does the same for
+every column of a matrix.
 
 ## Usage
 
 ``` r
-mhp_compare(x, frequency = c("quarterly", "annual"), max_lambda = 100000L)
+mhp_compare(
+  x,
+  frequency = c("quarterly", "annual", "monthly"),
+  max_lambda = 100000L
+)
+
+# Default S3 method
+mhp_compare(
+  x,
+  frequency = c("quarterly", "annual", "monthly"),
+  max_lambda = 100000L
+)
+
+batch_compare(
+  X,
+  frequency = c("quarterly", "annual", "monthly"),
+  max_lambda = 100000L
+)
+
+# Default S3 method
+batch_compare(
+  X,
+  frequency = c("quarterly", "annual", "monthly"),
+  max_lambda = 100000L
+)
 ```
 
 ## Arguments
 
 - x:
 
-  Numeric vector. The time series to analyze.
+  a numeric vector or a `ts` object, without missing values; at least 5
+  observations.
 
 - frequency:
 
-  Character. Data frequency: "quarterly" (lambda=1600) or "annual"
-  (lambda=100).
+  `"quarterly"` (default), `"annual"` or `"monthly"`.
 
 - max_lambda:
 
-  Integer. Maximum lambda for Modified HP search. Default 100000.
+  the largest \\\lambda\\ of the search over \\1, 2, \dots,\\
+  `max_lambda` (default 100000).
+
+- X:
+
+  a numeric matrix or data frame, one series per column.
 
 ## Value
 
-A data.table with comparison statistics for both methods:
-
-- method:
-
-  "HP" or "Modified HP"
-
-- lambda:
-
-  Smoothing parameter used
-
-- cycle_sd:
-
-  Standard deviation of cyclical component
-
-- cycle_mean:
-
-  Mean of cyclical component
-
-- ar1:
-
-  First-order autocorrelation of cyclical component
-
-- cycle_range:
-
-  Range of cyclical component (max - min)
-
-- gcv:
-
-  GCV value (NA for standard HP)
+`mhp_compare()`: a `data.table` with one row per method (`HP`,
+`Modified HP`) and the columns `method`, `lambda`, `cycle_sd`,
+`cycle_mean`, `ar1`, `cycle_range`, `gcv`. `batch_compare()`: a
+`data.table` with one row per series and the columns `series`,
+`hp_lambda`, `mhp_lambda`, `hp_cycle_sd`, `mhp_cycle_sd`, `sd_diff`,
+`hp_ar1`, `mhp_ar1`, `ar1_diff`, `relative_sd`.
 
 ## Details
 
-The comparison includes: 1. Standard HP filter with fixed lambda (1600
-for quarterly, 100 for annual) 2. Modified HP filter with GCV-optimized
-lambda
+The conventional values are \\\lambda = 1600\\ (quarterly), 100 (annual)
+and 129600 (monthly, Ravn and Uhlig 2002). `ar1` is the first-order
+autocorrelation of the cycle, \\\sum_t c_t c\_{t+1} / \sum_t c_t^2\\.
 
-Statistics calculated on the cyclical component help assess filter
-performance: - Lower cycle SD suggests smoother trend - AR(1) near 0
-suggests successful cycle extraction - Near-zero mean suggests proper
-centering
+## See also
+
+[`fmhp_compare`](https://myaseen208.com/mhpfilter/reference/fmhp_compare.md),
+[`plot_comparison`](https://myaseen208.com/mhpfilter/reference/plot_comparison.md)
+
+## Author
+
+Muhammad Yaseen (<myaseen208@gmail.com>)
 
 ## Examples
 
 ``` r
-# Example 1: Quarterly GDP-like series
-set.seed(789)
-n <- 100
-gdp <- cumsum(rnorm(n, mean = 0.7, sd = 0.5)) + 2 * cos(2 * pi * (1:n) / 32)
-comparison <- mhp_compare(gdp, frequency = "quarterly", max_lambda = 10000)
-print(comparison)
-#>         method lambda  cycle_sd    cycle_mean       ar1 cycle_range      gcv
-#>         <char>  <num>     <num>         <num>     <num>       <num>    <num>
-#> 1:          HP   1600 0.9492746  2.372129e-12 0.8547305    3.882929       NA
-#> 2: Modified HP    206 0.5323633 -3.261835e-13 0.6231910    2.408114 0.552981
-
-# Example 2: Annual series
-set.seed(101)
-n_annual <- 50
-annual_series <- cumsum(rnorm(n_annual, mean = 2.0, sd = 1.0)) +
-  3 * sin(2 * pi * (1:n_annual) / 10)
-annual_comparison <- mhp_compare(annual_series, frequency = "annual", max_lambda = 5000)
-print(annual_comparison)
-#>         method lambda cycle_sd    cycle_mean       ar1 cycle_range      gcv
-#>         <char>  <num>    <num>         <num>     <num>       <num>    <num>
-#> 1:          HP    100 2.130999 -2.198952e-13 0.7444730    7.759845       NA
-#> 2: Modified HP    956 2.441077  2.926424e-12 0.7834235    9.780873 6.450526
-
-# Example 3: Visual comparison
-set.seed(2023)
-test_series <- cumsum(rnorm(120, mean = 0.5, sd = 0.4)) +
-  runif(1, 1, 3) * sin(2 * pi * (1:120) / 30)
-
-comp_result <- mhp_compare(test_series, frequency = "quarterly", max_lambda = 20000)
-
-if (require(ggplot2)) {
-  # Create visualization
-  hp_result <- hp_filter(test_series, lambda = 1600, as_dt = FALSE)
-  mhp_result <- mhp_filter(test_series, max_lambda = 20000, as_dt = FALSE)
-
-  plot_comparison(test_series, frequency = "quarterly", max_lambda = 20000)
-}
-
+data(us_macro)
+cmp <-
+  mhp_compare(
+      x          = log(us_macro$gdp)
+    , frequency  = "quarterly"
+    , max_lambda = 100000
+    )
+cmp
+#>         method lambda   cycle_sd    cycle_mean       ar1 cycle_range
+#>         <char>  <num>      <num>         <num>     <num>       <num>
+#> 1:          HP   1600 0.01543904  4.942713e-12 0.8668207  0.08590516
+#> 2: Modified HP    683 0.01333176 -1.634336e-13 0.8280266  0.07801575
+#>             gcv
+#>           <num>
+#> 1:           NA
+#> 2: 0.0002819926
+bc <-
+  batch_compare(
+      X          = log(as.matrix(us_macro[, c("gdp", "consumption", "investment")]))
+    , frequency  = "quarterly"
+    , max_lambda = 100000
+    )
+bc
+#>         series hp_lambda mhp_lambda hp_cycle_sd mhp_cycle_sd      sd_diff
+#>         <char>     <num>      <int>       <num>        <num>        <num>
+#> 1:         gdp      1600        683  0.01543904   0.01333176 -0.002107273
+#> 2: consumption      1600        534  0.01241982   0.01000618 -0.002413639
+#> 3:  investment      1600       1009  0.07189806   0.06760443 -0.004293628
+#>       hp_ar1   mhp_ar1    ar1_diff relative_sd
+#>        <num>     <num>       <num>       <num>
+#> 1: 0.8668207 0.8280266 -0.03879413   0.8635101
+#> 2: 0.8779254 0.8231665 -0.05475890   0.8056623
+#> 3: 0.8143287 0.7914367 -0.02289200   0.9402817
 ```

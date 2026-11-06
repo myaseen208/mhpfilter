@@ -1,6 +1,112 @@
 # Changelog
 
+## mhpfilter 1.0.0
+
+### Changes visible to users
+
+- Every function keeps its name, its arguments and its results, so
+  existing scripts run unchanged; the results of every example of
+  version 0.1.0 are reproduced to 1e-8. New arguments are appended with
+  defaults that give the old behaviour (`log_scale = FALSE`,
+  `criterion = "approximate"`, `fmhp = FALSE`), and the frequency
+  `"monthly"` (lambda = 129600) is added to the comparisons.
+- Every function that takes a series or a result is an S3 generic with a
+  `.default` method. A `ts` keeps its time and frequency in the results.
+- With `as_dt = FALSE` the filters return lists of class
+  `c("mhp_<filter>", "mhp", "mhp_result", "list")` with
+  [`print()`](https://rdrr.io/r/base/print.html),
+  [`summary()`](https://rdrr.io/r/base/summary.html),
+  [`plot()`](https://rdrr.io/r/graphics/plot.default.html),
+  [`ggplot2::autoplot()`](https://ggplot2.tidyverse.org/reference/autoplot.html)
+  and `as.data.table()` methods; the printed result ends with the
+  sources of the method.
+- No startup message.
+
+### Speed
+
+- Every filter is one pentadiagonal solve, O(T), instead of a dense one,
+  O(T^3):
+  [`mhp_filter()`](https://myaseen208.com/mhpfilter/reference/mhp_filter.md)
+  searches 100000 values of lambda for 200 observations in 1.3 s (6.4 s
+  for 0.1.0), and 3000 values for 500 observations 20 times faster than
+  0.1.0 (vignette “Validation and speed”).
+
+### Corrections
+
+- [`plot_batch()`](https://myaseen208.com/mhpfilter/reference/plot_batch.md)
+  passed `linewidth` twice (a warning) and ignored `highlight` in the
+  faceted plot.
+- The help page of
+  [`mhp_filter()`](https://myaseen208.com/mhpfilter/reference/mhp_filter.md)
+  printed the factor of the criterion as `1 + 2/(T lambda)`; the code
+  used, and still uses, `1 + 2T/lambda` (eq. 6 of Choudhary et
+  al. 2014).
+- [`mhp_batch()`](https://myaseen208.com/mhpfilter/reference/mhp_batch.md)
+  and
+  [`batch_compare()`](https://myaseen208.com/mhpfilter/reference/mhp_compare.md)
+  accept series of different lengths (leading and trailing missing
+  values).
+
+### New
+
+- [`fmhp_filter()`](https://myaseen208.com/mhpfilter/reference/fmhp_filter.md)
+  and
+  [`fmhp_batch()`](https://myaseen208.com/mhpfilter/reference/fmhp_batch.md):
+  the fully modified HP filter of Hanif, Iqbal and Choudhary (2017),
+  with endogenous lambda and endogenous linear or quadratic end-point
+  weights; it reproduces the published MATLAB code (`form = "rows"`, the
+  default) and offers the penalised least-squares form
+  (`form = "differences"`) and a fixed lambda (`lambda =`).
+- [`fmhp_compare()`](https://myaseen208.com/mhpfilter/reference/fmhp_compare.md):
+  HP, modified HP and fully modified HP filters compared by the moments
+  of the cycles and the end-point loss.
+- [`hp_loss()`](https://myaseen208.com/mhpfilter/reference/hp_loss.md),
+  [`hp_gain()`](https://myaseen208.com/mhpfilter/reference/hp_gain.md),
+  [`hp_weights()`](https://myaseen208.com/mhpfilter/reference/hp_weights.md),
+  [`hp_schedule()`](https://myaseen208.com/mhpfilter/reference/hp_schedule.md):
+  the end-point loss of Bloechl (2014), the gain functions, the filter
+  weights and the end-point schedules of any HP-type filter. The
+  end-point losses of the HP filter in Tables 3a and 3b of Hanif et
+  al. (2017) are reproduced, and so are the annual losses of the paper’s
+  own scheme (quadratic weights, k = 20, alpha = 10) and the weights of
+  its Figure 1a; the quarterly losses of its scheme are not, because the
+  paper does not report the weights behind them.
+- `mhp_filter(criterion = "exact")`: exact generalised cross-validation
+  (eq. 5 of Choudhary et al. 2014) beside the published approximation;
+  on the US series it is smallest at lambda = 1, which the help page
+  explains.
+- [`mhp_designs()`](https://myaseen208.com/mhpfilter/reference/mhp_designs.md),
+  [`mhp_simulate()`](https://myaseen208.com/mhpfilter/reference/mhp_simulate.md),
+  [`fmhp_simulation()`](https://myaseen208.com/mhpfilter/reference/fmhp_simulation.md):
+  the simulation designs of the 2014 and 2017 papers, simulated
+  trend-plus-cycle series and the power comparison of the filters. The
+  results of the comparison, for every design, are shipped and discussed
+  in a vignette; they do not confirm that the fully modified filter wins
+  in every replicate.
+- [`mhp_interpret()`](https://myaseen208.com/mhpfilter/reference/mhp_interpret.md),
+  [`mhp_cite()`](https://myaseen208.com/mhpfilter/reference/mhp_cite.md),
+  [`mhp_app()`](https://myaseen208.com/mhpfilter/reference/mhp_app.md):
+  a plain-language interpretation of every result, the references of
+  every method and a built-in shiny application;
+  [`mhp_theme()`](https://myaseen208.com/mhpfilter/reference/mhp_theme.md),
+  [`mhp_save()`](https://myaseen208.com/mhpfilter/reference/mhp_save.md)
+  (with WebP),
+  [`mhp_notation()`](https://myaseen208.com/mhpfilter/reference/mhp_notation.md),
+  [`mhp_reference()`](https://myaseen208.com/mhpfilter/reference/mhp_reference.md).
+- Data `us_macro`: quarterly US real GDP, consumption and investment,
+  1959 to 2009.
+- Quarto vignettes in HTML and PDF; complete help pages with the
+  formulas; tests against both MATLAB codes of the authors and against
+  the published values.
+
+### Internal
+
+- collapse is no longer imported; the help pages, README and NEWS are
+  generated from roxygen and Quarto.
+
 ## mhpfilter 0.1.0
+
+CRAN release: 2026-02-13
 
 ### Initial CRAN Release (2026-02-06)
 
@@ -26,7 +132,7 @@ methodology of Choudhary, Hanif & Iqbal (2014).
   Compare HP vs Modified HP for single series
 - [`mhp_batch()`](https://myaseen208.com/mhpfilter/reference/mhp_batch.md) -
   Batch processing for multiple time series
-- [`batch_compare()`](https://myaseen208.com/mhpfilter/reference/batch_compare.md) -
+- [`batch_compare()`](https://myaseen208.com/mhpfilter/reference/mhp_compare.md) -
   Batch comparison of HP vs Modified HP
 
 ##### Visualization Functions
@@ -42,7 +148,7 @@ methodology of Choudhary, Hanif & Iqbal (2014).
 
 - [`get_lambda()`](https://myaseen208.com/mhpfilter/reference/get_lambda.md) -
   Extract optimal λ from results
-- [`get_gcv()`](https://myaseen208.com/mhpfilter/reference/get_gcv.md) -
+- [`get_gcv()`](https://myaseen208.com/mhpfilter/reference/get_lambda.md) -
   Extract GCV value from results
 - [`print.mhp()`](https://myaseen208.com/mhpfilter/reference/print.mhp.md) -
   Print method for mhp class objects
@@ -105,19 +211,20 @@ Economics*, 46(19), 2205-2214.
 
 ##### Package Author and Maintainer
 
-**Muhammad Yaseen**  
-Postdoctoral Research Fellow  
-School of Mathematical and Statistical Sciences  
+**Muhammad Yaseen**\
+Postdoctoral Research Fellow\
+School of Mathematical and Statistical Sciences\
 Clemson University
 
 ##### Original Methodology Authors
 
-**Javed Iqbal** - State Bank of Pakistan  
+**Javed Iqbal** - State Bank of Pakistan\
 **M. Nadim Hanif** - State Bank of Pakistan
 
 #### Installation
 
 ``` r
+
 # From CRAN (recommended)
 install.packages("mhpfilter")
 

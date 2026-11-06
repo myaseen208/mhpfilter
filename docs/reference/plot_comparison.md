@@ -1,16 +1,19 @@
-# Plot Comparison of HP vs Modified HP
+# Plot the HP and modified HP filters of one series
 
-Create a ggplot2 comparison of HP and Modified HP filter trends. Useful
-for visualizing differences between fixed and optimized smoothing.
+`plot_comparison()` draws the series with the trends of the HP filter
+(at the conventional \\\lambda\\ of its frequency) and of the modified
+HP filter, and optionally the cycles; with `fmhp = TRUE` the fully
+modified HP filter is added.
 
 ## Usage
 
 ``` r
 plot_comparison(
   x,
-  frequency = c("quarterly", "annual"),
+  frequency = c("quarterly", "annual", "monthly"),
   max_lambda = 100000L,
-  show_cycle = FALSE
+  show_cycle = FALSE,
+  fmhp = FALSE
 )
 ```
 
@@ -18,66 +21,46 @@ plot_comparison(
 
 - x:
 
-  Numeric vector. The time series.
+  a numeric vector or a `ts` object, without missing values; at least 5
+  observations.
 
 - frequency:
 
-  Character. Data frequency: "quarterly" or "annual".
+  `"quarterly"` (default), `"annual"` or `"monthly"`.
 
 - max_lambda:
 
-  Integer. Maximum lambda for Modified HP search.
+  the largest \\\lambda\\ of the search over \\1, 2, \dots,\\
+  `max_lambda` (default 100000).
 
 - show_cycle:
 
-  Logical. If TRUE, also show cyclical components.
+  draw the cycles too (default `FALSE`).
+
+- fmhp:
+
+  add the fully modified HP filter (default `FALSE`; it uses
+  `max_lambda = 3000` and the other defaults of
+  [`fmhp_filter()`](https://myaseen208.com/mhpfilter/reference/fmhp_filter.md)
+  on the scale of the series).
 
 ## Value
 
-A ggplot object.
+A `ggplot` object.
 
-## Details
+## Author
 
-Creates comparison plots showing: 1. Original series with HP and
-Modified HP trends overlaid 2. (Optional) Cyclical components from both
-methods
-
-The plot uses distinct colors and line styles to differentiate methods,
-with annotations showing lambda values.
+Muhammad Yaseen (<myaseen208@gmail.com>)
 
 ## Examples
 
 ``` r
-set.seed(123)
-# Simulate realistic economic data
-n <- 100
-base_level <- 100
-growth_rate <- 0.5
-volatility <- 1.2
-
-y <- base_level + cumsum(rnorm(n, mean = growth_rate / 100, sd = volatility / 100)) +
-  2.5 * sin(2 * pi * (1:n) / 25) + rnorm(n, sd = 0.5)
-
-if (require(ggplot2)) {
-  # Basic comparison
-  plot_comparison(y, frequency = "quarterly", max_lambda = 10000)
-
-  # With cycles
-  plot_comparison(y, frequency = "quarterly", max_lambda = 10000, show_cycle = TRUE)
-
-  # Customized plot
-  p <- plot_comparison(y, frequency = "quarterly", max_lambda = 10000)
-  p <- p +
-    ggplot2::labs(
-      title = "HP vs Modified HP: Trend Comparison",
-      subtitle = "Quarterly macroeconomic series"
-    ) +
-    ggplot2::theme(
-      plot.title = ggplot2::element_text(face = "bold", size = 14),
-      legend.title = ggplot2::element_blank(),
-      legend.position = "bottom"
-    )
-  print(p)
-}
-
+data(us_macro)
+plot_comparison(
+    x          = log(us_macro$gdp)
+  , frequency  = "quarterly"
+  , max_lambda = 100000
+  , show_cycle = TRUE
+  , fmhp       = TRUE
+  )
 ```

@@ -1,93 +1,123 @@
-# mhpfilter: Fast Modified Hodrick-Prescott Filter
+# mhpfilter: Modified and Fully Modified Hodrick-Prescott Filters
 
-High-performance implementation of the Modified HP Filter for
-decomposing time series into trend and cyclical components. Based on the
-methodology of Choudhary, Hanif & Iqbal (2014) which uses generalized
-cross-validation to automatically select the optimal smoothing parameter
-lambda.
+mhpfilter splits a macroeconomic time series into a trend and a cycle
+with the filter of Hodrick and Prescott (1997) and with two versions
+whose settings come from the data: the modified HP filter of McDermott
+(1997), which chooses the smoothing parameter of each series by
+generalised cross-validation (Choudhary, Hanif and Iqbal 2014), and the
+fully modified HP filter of Hanif, Iqbal and Choudhary (2017), which
+also reduces the bias of the HP filter at the ends of the series by
+raising the smoothing parameter there, with weights that minimise the
+end-point loss of Bloechl (2014).
 
 ## Details
 
-The standard Hodrick-Prescott (1997) filter decomposes a time series
-\\y_t\\ into trend \\g_t\\ and cycle \\c_t\\ components by minimizing:
+**Functions**, in the order of an analysis:
 
-\$\$\sum\_{t=1}^{T}(y_t - g_t)^2 + \lambda
-\sum\_{t=1}^{T-2}\[(g\_{t+2} - g\_{t+1}) - (g\_{t+1} - g_t)\]^2\$\$
+- [`hp_filter`](https://myaseen208.com/mhpfilter/reference/hp_filter.md),
+  [`mhp_filter`](https://myaseen208.com/mhpfilter/reference/mhp_filter.md),
+  [`fmhp_filter`](https://myaseen208.com/mhpfilter/reference/fmhp_filter.md):
+  the three filters.
 
-where \\\lambda\\ is the smoothing parameter that controls the trade-off
-between trend smoothness and cycle fit.
+- [`mhp_batch`](https://myaseen208.com/mhpfilter/reference/mhp_batch.md),
+  [`fmhp_batch`](https://myaseen208.com/mhpfilter/reference/fmhp_batch.md):
+  many series at once.
 
-The Modified HP Filter (McDermott, 1997) selects \\\lambda\\ optimally
-using generalized cross-validation (GCV). The GCV criterion is:
+- [`mhp_compare`](https://myaseen208.com/mhpfilter/reference/mhp_compare.md),
+  [`batch_compare`](https://myaseen208.com/mhpfilter/reference/mhp_compare.md),
+  [`fmhp_compare`](https://myaseen208.com/mhpfilter/reference/fmhp_compare.md):
+  the filters compared, by the moments of the cycles and the end-point
+  loss.
 
-\$\$GCV(\lambda) = \frac{SSR(\lambda)}{T} \left\[ 1 + \frac{2}{T\lambda}
-\right\]\$\$
+- [`hp_weights`](https://myaseen208.com/mhpfilter/reference/hp_weights.md),
+  [`hp_gain`](https://myaseen208.com/mhpfilter/reference/hp_gain.md),
+  [`hp_loss`](https://myaseen208.com/mhpfilter/reference/hp_loss.md),
+  [`hp_schedule`](https://myaseen208.com/mhpfilter/reference/hp_schedule.md):
+  the weights, gains and end-point loss of any HP-type filter.
 
-where \\SSR(\lambda)\\ is the sum of squared residuals. The optimal
-\\\lambda\\ minimizes this GCV criterion.
+- [`mhp_designs`](https://myaseen208.com/mhpfilter/reference/mhp_designs.md),
+  [`mhp_simulate`](https://myaseen208.com/mhpfilter/reference/mhp_simulate.md),
+  [`fmhp_simulation`](https://myaseen208.com/mhpfilter/reference/fmhp_simulation.md):
+  simulated series and the power comparison of the paper.
 
-## Main Functions
+- [`autoplot.mhp`](https://myaseen208.com/mhpfilter/reference/autoplot.mhp.md),
+  [`plot_comparison`](https://myaseen208.com/mhpfilter/reference/plot_comparison.md),
+  [`plot_batch`](https://myaseen208.com/mhpfilter/reference/plot_batch.md):
+  graphics;
+  [`get_lambda`](https://myaseen208.com/mhpfilter/reference/get_lambda.md),
+  [`get_gcv`](https://myaseen208.com/mhpfilter/reference/get_lambda.md):
+  accessors.
 
-- [`mhp_filter`](https://myaseen208.com/mhpfilter/reference/mhp_filter.md):
-  Apply Modified HP filter to single series
+- [`mhp_interpret`](https://myaseen208.com/mhpfilter/reference/mhp_interpret.md),
+  [`mhp_cite`](https://myaseen208.com/mhpfilter/reference/mhp_cite.md):
+  a plain-language interpretation and the references of a result;
+  [`mhp_app`](https://myaseen208.com/mhpfilter/reference/mhp_app.md):
+  the built-in application.
 
-- [`hp_filter`](https://myaseen208.com/mhpfilter/reference/hp_filter.md):
-  Apply standard HP filter with fixed lambda
+Every filter is an S3 generic with a `.default` method. With
+`as_dt = TRUE` (the default) the filters return a `data.table`, as in
+version 0.1.0; with `as_dt = FALSE` a list with a class and the methods
+of
+[`mhp-methods`](https://myaseen208.com/mhpfilter/reference/mhp-methods.md).
+Utilities:
+[`mhp_theme`](https://myaseen208.com/mhpfilter/reference/mhp_theme.md),
+[`mhp_save`](https://myaseen208.com/mhpfilter/reference/mhp_save.md),
+[`mhp_notation`](https://myaseen208.com/mhpfilter/reference/mhp_notation.md),
+[`mhp_reference`](https://myaseen208.com/mhpfilter/reference/mhp_reference.md).
 
-- [`mhp_batch`](https://myaseen208.com/mhpfilter/reference/mhp_batch.md):
-  Batch process multiple series efficiently
+**Data.**
+[`us_macro`](https://myaseen208.com/mhpfilter/reference/us_macro.md):
+quarterly real GDP, consumption and investment of the United States,
+1959 to 2009.
 
-- [`mhp_compare`](https://myaseen208.com/mhpfilter/reference/mhp_compare.md):
-  Compare HP vs Modified HP for single series
+**Vignettes.** Start with
+[`vignette("mhpfilter_01_getting_started", package = "mhpfilter")`](https://myaseen208.com/mhpfilter/articles/mhpfilter_01_getting_started.md);
+`browseVignettes("mhpfilter")` lists all of them, in HTML and PDF.
 
-- [`batch_compare`](https://myaseen208.com/mhpfilter/reference/batch_compare.md):
-  Compare HP vs Modified HP for multiple series
+## Notation
 
-- [`autoplot.mhp`](https://myaseen208.com/mhpfilter/reference/autoplot.mhp.md):
-  ggplot2 visualization for mhp objects
+Scalars are upper-case letters in normal face, indices lower-case
+italic, vectors lower-case bold and matrices upper-case bold; Greek
+letters follow the same rule. The full table is
+[`mhp_notation()`](https://myaseen208.com/mhpfilter/reference/mhp_notation.md).
 
-- [`plot_comparison`](https://myaseen208.com/mhpfilter/reference/plot_comparison.md):
-  Compare HP and Modified HP visually
-
-- [`plot_batch`](https://myaseen208.com/mhpfilter/reference/plot_batch.md):
-  Visualize batch processing results
-
-- [`get_lambda`](https://myaseen208.com/mhpfilter/reference/get_lambda.md):
-  Extract optimal lambda from results
-
-- [`get_gcv`](https://myaseen208.com/mhpfilter/reference/get_gcv.md):
-  Extract GCV value from results
+|  |  |
+|----|----|
+| \\T\\ | number of observations |
+| \\\mathbf{x}\\, \\\mathbf{g}\\, \\\mathbf{c}\\ | series, trend and cycle |
+| \\\mathbf{K}\\, \\\mathbf{A} = \mathbf{K}^\top\mathbf{K}\\ | second differences and the penalty matrix |
+| \\\mathbf{B}\\ | smoother (filter weights) |
+| \\\lambda\\, \\\lambda_t\\ | smoothing parameter(s) |
+| \\\alpha\\, \\k\\ | end-point weight and number of end values |
+| \\P_t(\omega)\\, \\l(t)\\, \\L\\ | gain, loss and total loss |
 
 ## References
 
-Choudhary, M.A., Hanif, M.N., & Iqbal, J. (2014). On smoothing
+Bloechl, A. (2014). Reducing the excess variability of the
+Hodrick-Prescott filter by flexible penalization. *Discussion Paper*
+2014-1, University of Munich.
+
+Choudhary, M. A., Hanif, M. N. and Iqbal, J. (2014). On smoothing
 macroeconomic time series using the modified HP filter. *Applied
-Economics*, 46(19), 2205-2214.
+Economics*, **46**(19), 2205–2214.
+[doi:10.1080/00036846.2014.894631](https://doi.org/10.1080/00036846.2014.894631)
 
-Hodrick, R.J., & Prescott, E.C. (1997). Postwar US business cycles: An
-empirical investigation. *Journal of Money, Credit and Banking*, 29(1),
-1-16.
+Hanif, M. N., Iqbal, J. and Choudhary, M. A. (2017). Fully modified HP
+filter. *SBP Working Paper Series*, No. 88, State Bank of Pakistan.
 
-McDermott, C.J. (1997). Note on the modified Hodrick-Prescott filter.
-*IMF Working Paper No. 97/108*.
+Hodrick, R. J. and Prescott, E. C. (1997). Postwar U.S. business cycles:
+an empirical investigation. *Journal of Money, Credit and Banking*,
+**29**(1), 1–16. [doi:10.2307/2953682](https://doi.org/10.2307/2953682)
+
+McDermott, C. J. (1997). An automatic method for choosing the smoothing
+parameter in the HP filter. Unpublished, International Monetary Fund,
+Washington DC.
 
 ## See also
 
-Useful links:
-
-- <https://myaseen208.com/mhpfilter/>
-
-- Report bugs at <https://github.com/myaseen208/mhpfilter/issues>
+[`mhp-methods`](https://myaseen208.com/mhpfilter/reference/mhp-methods.md),
+[`mhp_notation`](https://myaseen208.com/mhpfilter/reference/mhp_notation.md)
 
 ## Author
 
-**Maintainer**: Muhammad Yaseen <myaseen208@gmail.com>
-([ORCID](https://orcid.org/0000-0002-5923-1714))
-
-Other contributors:
-
-- Javed Iqbal <Javed.iqbal6@sbp.org.pk> (Original methodology author)
-  \[contributor\]
-
-- M. Nadim Hanif <Nadeem.hanif@sbp.org.pk> (Original methodology author)
-  \[contributor\]
+Muhammad Yaseen (<myaseen208@gmail.com>), ORCID 0000-0002-5923-1714.
